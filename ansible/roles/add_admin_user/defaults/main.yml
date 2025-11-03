@@ -1,0 +1,4 @@
+admin_user_name: "webmaster"
+add_local_key: false
+local_ssh_key_path: "~/.ssh/id_rsa.pub"
+admin_user_pass: "{{ vault_admin_password }}"

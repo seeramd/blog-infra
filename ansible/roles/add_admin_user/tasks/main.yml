@@ -1,0 +1,36 @@
+---
+- name: Create sudo user
+  ansible.builtin.user:
+    name: "{{ admin_user_name }}"
+    password: "{{ admin_user_pass | password_hash('sha512') }}"
+    shell: /bin/bash
+    groups: sudo
+    append: true
+    state: present
+
+- name: add to sudoers file
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    line: "{{ admin_user_name }} ALL=(ALL) NOPASSWD:ALL"
+    validate: '/usr/sbin/visudo -cf %s'
+    state: present
+
+- name: Read root authorized_keys
+  ansible.builtin.slurp:
+    src: /root/.ssh/authorized_keys
+  register: root_authorized_keys
+  failed_when: false
+
+- name: Add root authorized_keys to new user
+  ansible.builtin.authorized_key:
+    user: "{{ admin_user_name }}"
+    state: present
+    key: "{{ root_authorized_keys['content'] | b64decode }}"
+  when: root_authorized_keys is not failed
+
+- name: Add local pubkey to authorized keys
+  ansible.builtin.authorized_key:
+    user: "{{ admin_user_name }}"
+    state: present
+    key: "{{ lookup('file', local_ssh_key_path) }}"
+  when: add_local_key

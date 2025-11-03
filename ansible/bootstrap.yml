@@ -1,0 +1,7 @@
+---
+- name: Initial set-up for all hosts
+  hosts: all
+  gather_facts: true
+  roles:
+    - add_admin_user
+    - configure_ssh

@@ -1,0 +1,6 @@
+[webservers]
+websrv01 ansible_port=2222
+
+[databases]
+dbsrv01 ansible_port=2222
+

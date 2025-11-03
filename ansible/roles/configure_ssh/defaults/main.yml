@@ -1,0 +1,2 @@
+ssh_port: 2222
+disable_password_auth: true

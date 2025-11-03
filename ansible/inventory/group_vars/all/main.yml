@@ -1,0 +1,6 @@
+---
+base_packages:                                                                                                                                                              
+  - net-tools                                                                                                                                                             
+  - htop                                                                                                                                                              
+  - atop                                                                                                                                                          
+  - neofetch                                                                                                                                                  

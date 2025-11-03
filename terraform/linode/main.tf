@@ -55,6 +55,10 @@ resource "linode_instance" "dbsrv" {
   root_pass       = var.root_pass
 
   interface {
+    purpose = "public"
+  }
+
+  interface {
     purpose = "vpc"
     subnet_id = linode_vpc_subnet.vpcsubnet.id
     ipv4 {
@@ -92,6 +96,15 @@ resource "linode_firewall" "webfirewall" {
     action   = "ACCEPT"
     protocol = "TCP"
     ports    = "22"
+    ipv4     = ["0.0.0.0/0"]
+    ipv6     = ["::/0"]
+  }
+
+  inbound {
+    label    = "allow-ssh-alt"
+    action   = "ACCEPT"
+    protocol = "TCP"
+    ports    = "2222"
     ipv4     = ["0.0.0.0/0"]
     ipv6     = ["::/0"]
   }
@@ -138,6 +151,15 @@ resource "linode_firewall" "dbfirewall" {
     action   = "ACCEPT"
     protocol = "TCP"
     ports    = "22"
+    ipv4     = ["0.0.0.0/0"]
+    ipv6     = ["::/0"]
+  }
+
+  inbound {
+    label    = "allow-ssh-alt"
+    action   = "ACCEPT"
+    protocol = "TCP"
+    ports    = "2222"
     ipv4     = ["0.0.0.0/0"]
     ipv6     = ["::/0"]
   }
