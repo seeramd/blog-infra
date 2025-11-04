@@ -1,0 +1,8 @@
+---
+- name: install and configure db packages
+  hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - install_base_packages
+    - install_db_packages

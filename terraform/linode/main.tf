@@ -110,25 +110,6 @@ resource "linode_firewall" "webfirewall" {
   }
 
   inbound_policy = "DROP"
-
-  outbound {
-    label    = "reject-http"
-    action   = "DROP"
-    protocol = "TCP"
-    ports    = "80"
-    ipv4     = ["0.0.0.0/0"]
-    ipv6     = ["::/0"]
-  }
-
-  outbound {
-    label    = "reject-https"
-    action   = "DROP"
-    protocol = "TCP"
-    ports    = "443"
-    ipv4     = ["0.0.0.0/0"]
-    ipv6     = ["::/0"]
-  }
-
   outbound_policy = "ACCEPT"
 
   linodes = [linode_instance.websrv.id]
@@ -165,7 +146,6 @@ resource "linode_firewall" "dbfirewall" {
   }
 
   inbound_policy = "DROP"
-
   outbound_policy = "ACCEPT"
 
   linodes = [linode_instance.dbsrv.id]

@@ -1,0 +1,9 @@
+---
+- name: install and configure webserver packages
+  hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - install_base_packages
+    - install_web_packages
+

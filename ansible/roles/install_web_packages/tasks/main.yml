@@ -1,0 +1,21 @@
+---
+- name: update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  changed_when: false
+
+- name: install web packages
+  ansible.builtin.package:
+    name: "{{ web_packages | default([]) }}"
+    state: present
+
+- name: enable apache modules
+  community.general.apache2_module:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ apache_modules | default([]) }}"
+  notify: restart apache2
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

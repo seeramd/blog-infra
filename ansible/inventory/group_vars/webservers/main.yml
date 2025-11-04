@@ -1,0 +1,9 @@
+---
+web_packages:
+  - apache2
+
+apache_modules:
+  - ssl
+  - rewrite
+  - proxy
+  - proxy_http

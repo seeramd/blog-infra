@@ -1,0 +1,12 @@
+---
+- name: update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  changed_when: false
+
+- name: install db packages
+  ansible.builtin.package:
+    name: "{{ db_packages | default([]) }}"
+    state: present
+

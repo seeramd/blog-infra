@@ -1,0 +1,12 @@
+---
+- name: update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  changed_when: false
+
+
+- name: Install base packages
+  ansible.builtin.package:
+    name: "{{ base_packages | default([]) }}"
+    state: present
